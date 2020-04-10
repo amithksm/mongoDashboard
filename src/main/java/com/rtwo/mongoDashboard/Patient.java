@@ -1,9 +1,13 @@
 package com.rtwo.mongoDashboard;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "P@tients")
+@Document(collection = "Patients")
 public class Patient {
 	
 	@Id
@@ -18,6 +22,19 @@ public class Patient {
 	private String district;
 	
 	private String taluk;
+	
+	private Date quarantineEndDate;
+	
+
+	public Date getStartDate() {
+		return quarantineEndDate;
+	}
+
+	public void setStartDate(String startDate) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		this.quarantineEndDate = sdf.parse(startDate);
+	}
 
 	public String getPatientId() {
 		return patientId;
@@ -70,7 +87,7 @@ public class Patient {
 	@Override
 	public String toString() {
 		return "Patient [patientId=" + patientId + ", name=" + name + ", address=" + address + ", state=" + state
-				+ ", district=" + district + ", taluk=" + taluk + "]";
+				+ ", district=" + district + ", taluk=" + taluk + ",startDate" + quarantineEndDate +"]";
 	}
 	
 	

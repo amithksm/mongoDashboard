@@ -1,5 +1,8 @@
 package com.rtwo.mongoDashboard;
 
+import java.text.ParseException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,7 @@ public class Controller {
 	private MongoTemplate mongoTemplate;
 	
 	@PostMapping("/register")
-	public void regPatient(@RequestBody PatientDto patDto) {
+	public void regPatient(@RequestBody PatientDto patDto) throws ParseException {
 		
 		System.out.println("Rest Input ..."+patDto);
 		patService.regPatient(patDto);
@@ -53,6 +56,21 @@ public class Controller {
 		result = mongoTemplate.count(query, Patient.class);
 		
 		System.out.println("Total count = " +result);
+	}
+	
+	@GetMapping("/getCompletedCount")
+	public void getCompleted(@RequestParam String quarentineEndDate) {
+		
+		// input search date in this format - 2020-04-01T18:30:00.000Z
+		// in real scenario this should be enhanced to exclude time - T18:30:00.000Z
+		long result = 0;
+		Query query = new Query();
+		
+		Date endDate = Date.from(Instant.parse(quarentineEndDate));
+		
+		query.addCriteria(Criteria.where("startDate").lt(endDate));
+		result = mongoTemplate.count(query, Patient.class);
+		System.out.println("Total count =" +result);
 	}
 
 }

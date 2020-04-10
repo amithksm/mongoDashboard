@@ -1,5 +1,6 @@
 package com.rtwo.mongoDashboard;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ public class PatientService {
 	@Autowired
 	IPatientRepo patRepo;
 
-	public void regPatient(PatientDto patDto) {
+	public void regPatient(PatientDto patDto) throws ParseException {
 		
 		Patient patient = new Patient();
 		
@@ -21,6 +22,7 @@ public class PatientService {
 		patient.setName(patDto.getName());
 		patient.setState(patDto.getState());
 		patient.setTaluk(patDto.getTaluk());
+		patient.setStartDate(patDto.getstartDate());
 		
 		patRepo.save(patient);
 		System.out.println("Saved..."+patient);

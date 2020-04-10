@@ -1,5 +1,7 @@
 package com.rtwo.mongoDashboard;
 
+import java.util.Date;
+
 public class PatientDto {
 	
 	private String name;
@@ -11,6 +13,12 @@ public class PatientDto {
 	private String district;
 	
 	private String taluk;
+	
+	private String quarantineEndDate;
+	
+	public String getstartDate() {
+		return quarantineEndDate;
+	}
 
 	public String getName() {
 		return name;
@@ -35,7 +43,7 @@ public class PatientDto {
 	@Override
 	public String toString() {
 		return "PatientDto [name=" + name + ", address=" + address + ", state=" + state + ", district=" + district
-				+ ", taluk=" + taluk + "]";
+				+ ", taluk=" + taluk + ",startDate" + quarantineEndDate +"]";
 	}
 	
 }
